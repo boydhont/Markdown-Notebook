@@ -31,7 +31,7 @@ const promptMultiLineInput = () => {
     while("Endless" === "Endless"){
         const input = prompt('> ');
         if(input.toUpperCase() === "*") return multiLineInput;
-        if(input === "RETURN" && multiLineInput.length > 0) multiLineInput.pop(); 
+        if(input === "**" && multiLineInput.length > 0){multiLineInput.splice(-1,1); continue;}
         multiLineInput.push(input);
     }
 }
@@ -48,12 +48,16 @@ const getMarkdownContent = (date, title, description, solution) => {
     let markdownContent = [];
     markdownContent.push("# " + title);
     markdownContent.push("");
-    if(description.length > 0) markdownContent.push("## Description");
-    description.forEach(o => markdownContent.push(o));
-    markdownContent.push("");
-    if(solution.length > 0) markdownContent.push("## Solution");
-    solution.forEach(o => markdownContent.push(o));
-    markdownContent.push("");
+    if(description.length > 0){
+        markdownContent.push("## Description");
+        description.forEach(o => markdownContent.push("- " + o));
+        markdownContent.push("");
+    }
+    if(solution.length > 0){
+        markdownContent.push("## Solution");
+        solution.forEach(o => markdownContent.push("- " + o));
+        markdownContent.push("");
+    }
     markdownContent.push("---");
     markdownContent.push("##### " + date + " - B. d'Hont"); //TODO add location
     return markdownContent
